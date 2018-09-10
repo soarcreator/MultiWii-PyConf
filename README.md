@@ -7,5 +7,6 @@ What can it do?
 - Works On OSX, Linux, Windows, iOS and Android.
 
 Dependencies:
+- Python 2.7.15
 - Kivy 1.11.0.dev0
 - pymultiwii 1.6 (https://github.com/alduxvm/pyMultiWii)
