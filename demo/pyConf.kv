@@ -1,0 +1,22 @@
+TextWidget:
+<TextWidget>:
+	BoxLayout:
+		orientation: "vertical"
+		size: root.size
+
+		Label:
+			text: root.angXText
+		Label:
+			text: root.angYText
+		Label:
+			text: root.headingText
+		BoxLayout:
+			orientation: "horizontal"
+			Button:
+				id: acc_calibration
+				text: "ACC_CALIBRATION"
+				on_press: root.OnAccCalibrationButton()
+			Button:
+				id: mag_calibration
+				text: "MAG_CALIBRATION"
+				on_press: root.OnMagCalibrationButton()
