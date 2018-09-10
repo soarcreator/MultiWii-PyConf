@@ -8,4 +8,4 @@ What can it do?
 
 Dependencies:
 - Kivy 1.11.0.dev0
-- pymultiwii 1.6
+- pymultiwii 1.6 (https://github.com/alduxvm/pyMultiWii)
