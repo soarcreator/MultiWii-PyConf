@@ -4,12 +4,66 @@ TextWidget:
 		orientation: "vertical"
 		size: root.size
 
+		GridLayout:
+			rows: 4
+		    cols: 4
+		    size_hint_y: 2.5
+
+			Label:
+				text: "RawData"
+			Label:
+				color: 1, 0.3, 0.3, 1
+				text: "X"
+			Label:
+				color: 0.3, 1, 0.3, 1
+				text: "Y"
+			Label:
+				color: 0.3, 0.3, 1, 1
+				text: "Z"
+
+			Label:
+				text: "Acc"
+			Label:
+				color: 1, 0.3, 0.3, 1
+				text: root.accXText
+			Label:
+				color: 0.3, 1, 0.3, 1
+				text: root.accYText
+			Label:
+				color: 0.3, 0.3, 1, 1
+				text: root.accZText
+
+			Label:
+				text: "Gyr"
+			Label:
+				color: 1, 0.3, 0.3, 1
+				text: root.gyrXText
+			Label:
+				color: 0.3, 1, 0.3, 1
+				text: root.gyrYText
+			Label:
+				color: 0.3, 0.3, 1, 1
+				text: root.gyrZText
+
+			Label:
+				text: "Mag"
+			Label:
+				color: 1, 0.3, 0.3, 1
+				text: root.magXText
+			Label:
+				color: 0.3, 1, 0.3, 1
+				text: root.magYText
+			Label:
+				color: 0.3, 0.3, 1, 1
+				text: root.magZText
+
 		Label:
 			text: root.angXText
 		Label:
 			text: root.angYText
 		Label:
 			text: root.headingText
+
 		BoxLayout:
 			orientation: "horizontal"
 			Button:

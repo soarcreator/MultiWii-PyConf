@@ -10,6 +10,18 @@ serialPort = "/dev/tty.usbserial-AH01RI1Q"
 board = MultiWii(serialPort)
 
 class TextWidget(Widget):
+	accXText = StringProperty()
+	accYText = StringProperty()
+	accZText = StringProperty()
+
+	gyrXText = StringProperty()
+	gyrYText = StringProperty()
+	gyrZText = StringProperty()
+
+	magXText = StringProperty()
+	magYText = StringProperty()
+	magZText = StringProperty()
+
 	angXText = StringProperty()
 	angYText = StringProperty()
 	headingText = StringProperty()
@@ -19,9 +31,26 @@ class TextWidget(Widget):
 		event = Clock.schedule_interval(self.Update, 1 / 60.)
 
 	def Update(self, dt):
+		data = board.getData(MultiWii.RAW_IMU)
+		if data == None:
+			return
+
+		self.accXText = str(data.get("ax"))
+		self.accYText = str(data.get("ay"))
+		self.accZText = str(data.get("az"))
+
+		self.gyrXText = str(data.get("gx"))
+		self.gyrYText = str(data.get("gy"))
+		self.gyrZText = str(data.get("gz"))
+
+		self.magXText = str(data.get("mx"))
+		self.magYText = str(data.get("my"))
+		self.magZText = str(data.get("mz"))
+
 		data = board.getData(MultiWii.ATTITUDE)
 		if data == None:
 			return
+
 		self.angXText = "ang_x = " + str(data.get("angx"))
 		self.angYText = "ang_y = " + str(data.get("angy"))
 		self.headingText = "heading = " + str(data.get("heading"))
