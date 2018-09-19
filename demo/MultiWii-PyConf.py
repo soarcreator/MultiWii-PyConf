@@ -1,3 +1,4 @@
+from math import *
 import time
 import threading
 from pymultiwii import MultiWii
@@ -60,6 +61,12 @@ class TextWidget(Widget):
 
 	def OnMagCalibrationButton(self):
 		board.sendCMD(0, MultiWii.MAG_CALIBRATION, [])
+
+	def OnArmButton(self):
+		board.arm()
+
+	def OnDisarmButton(self):
+		board.disarm()
 
 
 class PyConfApp(App):

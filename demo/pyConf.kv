@@ -74,3 +74,14 @@ TextWidget:
 				id: mag_calibration
 				text: "MAG_CALIBRATION"
 				on_press: root.OnMagCalibrationButton()
+
+		BoxLayout:
+			orientation: "horizontal"
+			Button:
+				id: arm
+				text: "Arm"
+				on_press: root.OnArmButton()
+			Button:
+				id: disarm
+				text: "Disarm"
+				on_press: root.OnDisarmButton()
