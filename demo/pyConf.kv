@@ -5,9 +5,9 @@ TextWidget:
 		size: root.size
 
 		GridLayout:
+		    size_hint_y: 2
 			rows: 4
 		    cols: 4
-		    size_hint_y: 2.5
 
 			Label:
 				text: "RawData"
@@ -66,6 +66,84 @@ TextWidget:
 
 		BoxLayout:
 			orientation: "horizontal"
+
+			BoxLayout:
+				orientation: "vertical"
+				BoxLayout:
+					orientation: "horizontal"
+					Label:
+						text_size: (200, None)
+						halign: "right"
+						text: "Roll: "
+					Label:
+						text_size: (200, None)
+						halign: "left"
+						text: root.rollText
+				Slider:
+					min: 0.0
+					max: 1.0
+					value: 0.5
+					on_touch_move: root.OnChangeRoll(self.value)
+
+			BoxLayout:
+				orientation: "vertical"
+				BoxLayout:
+					orientation: "horizontal"
+					Label:
+						text_size: (200, None)
+						halign: "right"
+						text: "Pitch: "
+					Label:
+						text_size: (200, None)
+						halign: "left"
+						text: root.pitchText
+				Slider:
+					min: 0.0
+					max: 1.0
+					value: 0.5
+					on_touch_move: root.OnChangePitch(self.value)
+
+			BoxLayout:
+				orientation: "vertical"
+				BoxLayout:
+					orientation: "horizontal"
+					Label:
+						text_size: (200, None)
+						halign: "right"
+						text: "Yaw: "
+					Label:
+						text_size: (200, None)
+						halign: "left"
+						text: root.yawText
+				Slider:
+					min: 0.0
+					max: 1.0
+					value: 0.5
+					on_touch_move: root.OnChangeYaw(self.value)
+
+			BoxLayout:
+				orientation: "vertical"
+				BoxLayout:
+					orientation: "horizontal"
+					Label:
+						text_size: (200, None)
+						halign: "right"
+						text: "Throttle: "
+					Label:
+						text_size: (200, None)
+						halign: "left"
+						text: root.throttleText
+				Slider:
+					min: 0.0
+					max: 1.0
+					value: 0.0
+					on_touch_move: root.OnChangeThrottle(self.value)
+
+		GridLayout:
+			size_hint_y: 2
+
+			rows: 2
+			cols: 2
 			Button:
 				id: acc_calibration
 				text: "ACC_CALIBRATION"
@@ -74,9 +152,6 @@ TextWidget:
 				id: mag_calibration
 				text: "MAG_CALIBRATION"
 				on_press: root.OnMagCalibrationButton()
-
-		BoxLayout:
-			orientation: "horizontal"
 			Button:
 				id: arm
 				text: "Arm"

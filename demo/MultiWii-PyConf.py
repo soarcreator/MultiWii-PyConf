@@ -10,6 +10,11 @@ from kivy.clock import Clock
 serialPort = "/dev/tty.usbserial-AH01RI1Q"
 board = MultiWii(serialPort)
 
+gRollValue = 0.5
+gPitchValue = 0.5
+gYawValue = 0.5
+gThrottleValue = 0.0
+
 class TextWidget(Widget):
 	accXText = StringProperty()
 	accYText = StringProperty()
@@ -27,11 +32,21 @@ class TextWidget(Widget):
 	angYText = StringProperty()
 	headingText = StringProperty()
 
+	rollText = StringProperty()
+	pitchText = StringProperty()
+	yawText = StringProperty()
+	throttleText = StringProperty()
+
 	def __init__(self, **kwargs):
 		super(TextWidget, self).__init__(**kwargs)
 		event = Clock.schedule_interval(self.Update, 1 / 60.)
 
 	def Update(self, dt):
+		global gRollValue, gPitchValue, gYawValue, gThrottleValue
+		rc = [1000 + 1000 * gRollValue, 1000 + 1000 * gPitchValue, 1000 + 1000 * gYawValue, 1000 + 1000 * gThrottleValue]
+		print(rc)
+		board.sendCMD(8, MultiWii.SET_RAW_RC, rc)
+
 		data = board.getData(MultiWii.RAW_IMU)
 		if data == None:
 			return
@@ -55,6 +70,31 @@ class TextWidget(Widget):
 		self.angXText = "ang_x = " + str(data.get("angx"))
 		self.angYText = "ang_y = " + str(data.get("angy"))
 		self.headingText = "heading = " + str(data.get("heading"))
+
+		data = board.getData(MultiWii.RC)
+		if data == None:
+			return
+
+		self.rollText = str(data["roll"])
+		self.pitchText = str(data["pitch"])
+		self.yawText = str(data["yaw"])
+		self.throttleText = str(data["throttle"])
+
+	def OnChangeRoll(self, value):
+		global gRollValue
+		gRollValue = value
+
+	def OnChangePitch(self, value):
+		global gPitchValue
+		gPitchValue = value
+
+	def OnChangeYaw(self, value):
+		global gYawValue
+		gYawValue = value
+
+	def OnChangeThrottle(self, value):
+		global gThrottleValue
+		gThrottleValue = value
 
 	def OnAccCalibrationButton(self):
 		board.sendCMD(0, MultiWii.ACC_CALIBRATION, [])
