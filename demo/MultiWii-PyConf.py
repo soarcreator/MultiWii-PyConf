@@ -2,6 +2,7 @@ from math import *
 import time
 import threading
 from pymultiwii import MultiWii
+from MultiWiiWithSocket import MultiWiiWithSocket
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
@@ -9,7 +10,7 @@ from kivy.clock import Clock
 
 serialPort = "/dev/tty.usbserial-AH01RI1Q"
 board = MultiWii(serialPort)
-
+# board = MultiWiiWithSocket("localhost", 6022)
 gRollValue = 0.5
 gPitchValue = 0.5
 gYawValue = 0.5
@@ -37,14 +38,18 @@ class TextWidget(Widget):
 	yawText = StringProperty()
 	throttleText = StringProperty()
 
-	def __init__(self, **kwargs):
-		super(TextWidget, self).__init__(**kwargs)
+	# def __init__(self, **kwargs):
+	# 	super(TextWidget, self).__init__(**kwargs)
+	#	event = Clock.schedule_interval(self.Update, 1 / 60.)
+
+	def Init(self):
+		# print(board.getData(MultiWii.RAW_IMU))
+		# board.sendCMD(8, MultiWii.SET_RAW_RC, [1000, 1000, 1000, 1000])
 		event = Clock.schedule_interval(self.Update, 1 / 60.)
 
 	def Update(self, dt):
 		global gRollValue, gPitchValue, gYawValue, gThrottleValue
 		rc = [1000 + 1000 * gRollValue, 1000 + 1000 * gPitchValue, 1000 + 1000 * gYawValue, 1000 + 1000 * gThrottleValue]
-		print(rc)
 		board.sendCMD(8, MultiWii.SET_RAW_RC, rc)
 
 		data = board.getData(MultiWii.RAW_IMU)
@@ -75,10 +80,10 @@ class TextWidget(Widget):
 		if data == None:
 			return
 
-		self.rollText = str(data["roll"])
-		self.pitchText = str(data["pitch"])
-		self.yawText = str(data["yaw"])
-		self.throttleText = str(data["throttle"])
+		self.rollText = str(data.get("roll"))
+		self.pitchText = str(data.get("pitch"))
+		self.yawText = str(data.get("yaw"))
+		self.throttleText = str(data.get("throttle"))
 
 	def OnChangeRoll(self, value):
 		global gRollValue
@@ -114,6 +119,7 @@ class PyConfApp(App):
 
 	def build(self):
 		root = TextWidget()
+		root.Init()
 		return root
 
 PyConfApp().run()
